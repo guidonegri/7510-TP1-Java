@@ -33,7 +33,6 @@ public class KnowledgeBase {
 	
 			String line;
 		    while( (line = br.readLine()) != null ) 
-		       //System.out.println(line);
 		    	if (line.matches(rule_pattern)) {
 					Rule rule = parseRule(line);
 					db_rules.add(rule);
@@ -62,7 +61,15 @@ public class KnowledgeBase {
    }
 	
 	private Rule parseRule(String line){
-		return new Rule();
+		Pattern p = Pattern.compile(rule_pattern);
+		Matcher m = p.matcher(line);
+		
+		String name = m.group(1);
+		String params_str = m.group(2);
+		String[] params = params_str.split(", ");
+		String facts_str = m.group(3).replace("),", ")-");
+		String[] facts = facts_str.split("- ");
+		return new Rule(name, params, facts);
 	}
 	
 	private Fact parseFact(String line){
@@ -71,7 +78,7 @@ public class KnowledgeBase {
 		
 		String name = m.group(1);
 		String params_str = m.group(2);
-		String[] params = params_str.split(",\\s");
+		String[] params = params_str.split(", ");
 		return new Fact(name, params);
 	}
 	
