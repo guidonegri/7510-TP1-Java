@@ -38,8 +38,6 @@ public class KnowledgeBase {
 					
 				} else if (line.matches(fact_pattern)) {
 					Fact fact = parseFact(line);
-					System.out.println("FACT name: " + fact.getName());
-					System.out.println("FACT param1: " + fact.getParams()[0]);
 					db_facts.add(fact);	
 				
 				} else {

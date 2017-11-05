@@ -18,6 +18,7 @@ public class KnowledgeBaseTest {
 		
 	}
 
+	// QUERY: FACTS
 	@Test
 	public void test_valid_query_varon() {
 		KnowledgeBase kb = new KnowledgeBase();
@@ -40,7 +41,7 @@ public class KnowledgeBaseTest {
 	}
 	
 	@Test
-	public void test_invalid_query_format() {
+	public void test_invalid_fact_query_format() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.parseDB("src/main/resources/rules.db");
 		Assert.assertFalse(kb.answer("varon (juan) ."));
@@ -60,4 +61,36 @@ public class KnowledgeBaseTest {
 		kb.parseDB("src/main/resources/rules.db");
 		Assert.assertFalse(kb.answer("hermano(alfredo, roberto)."));
 	}	
+	
+	// QUERY: RULES
+	@Test
+	public void test_valid_query_hijo() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/rules.db");
+		Assert.assertTrue(kb.answer("hijo(pepe, juan)."));
+	}
+	
+	@Test
+	public void test_no_match_query_hija() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/rules.db");
+		Assert.assertFalse(kb.answer("hija(maria, roberto)."));
+	}
+	
+	@Test
+	public void test_invalid_rule_query_format() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/rules.db");
+		Assert.assertFalse(kb.answer("hijo ( pepe, juan "));
+	}
+	
+	/*
+
+    });
+    it('hija(maria, roberto) should be false', function () {
+        assert(interpreter.checkQuery('hija(maria, roberto)') === false);
+    });
+    it('hijo(pepe, juan) should be true', function () {
+        assert(interpreter.checkQuery('hijo(pepe, juan)'));
+    });*/
 }
