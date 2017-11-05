@@ -1,5 +1,7 @@
 package ar.uba.fi.tdd.rulogic.model;
 
+import java.util.Arrays;
+
 public class Rule {
     private String name;
     private String[] params;
@@ -12,6 +14,12 @@ public class Rule {
     }
 
     public String getName(){ return name; }
+    
     public String[] getParams() { return params; }
+    
     public String[] getFacts() { return facts; }
+    
+    public boolean compare(Fact query){
+    	return name.equals(query.getName());
+    }
 }

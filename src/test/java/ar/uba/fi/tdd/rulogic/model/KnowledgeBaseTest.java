@@ -61,7 +61,7 @@ public class KnowledgeBaseTest {
 		kb.parseDB("src/main/resources/rules.db");
 		Assert.assertFalse(kb.answer("hermano(alfredo, roberto)."));
 	}	
-	
+
 	// QUERY: RULES
 	@Test
 	public void test_valid_query_hijo() {
@@ -83,14 +83,4 @@ public class KnowledgeBaseTest {
 		kb.parseDB("src/main/resources/rules.db");
 		Assert.assertFalse(kb.answer("hijo ( pepe, juan "));
 	}
-	
-	/*
-
-    });
-    it('hija(maria, roberto) should be false', function () {
-        assert(interpreter.checkQuery('hija(maria, roberto)') === false);
-    });
-    it('hijo(pepe, juan) should be true', function () {
-        assert(interpreter.checkQuery('hijo(pepe, juan)'));
-    });*/
 }

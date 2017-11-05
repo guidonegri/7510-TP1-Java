@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -100,10 +101,39 @@ public class KnowledgeBase {
 		return false;
 	}
 	
+	private boolean ruleQuery(Fact query){
+		for (int i = 0; i < db_rules.size(); i++){
+			Rule rule = db_rules.get(i);
+			if (! rule.compare(query)) continue;
+			String[] rule_facts = rule.getFacts();
+			
+			for (int j = 0; j < rule_facts.length; j++){
+				String fact_str = rule_facts[j];
+				String replaced_fact = replaceRuleFactWithQueryParams(fact_str, rule.getParams(), query.getParams());	
+				replaced_fact = replaced_fact + ".";
+				Fact new_fact = parseFact(replaced_fact);
+				boolean fact_result = factQuery(new_fact);
+				if (fact_result == false) return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	private String replaceRuleFactWithQueryParams(String rule_fact, String[] params_db, String[] params_query){
+		for (int i = 0; i < params_db.length; i++){
+			String aux = rule_fact.replace(params_db[i], params_query[i]);
+			rule_fact = aux;
+		}
+		return rule_fact;
+		
+	}
+	
 	public boolean answer(String query) {
 		if (! validQuery(query)) { System.out.println("Error: wrong query."); return false; }
 		Fact q = parseFact(query);
 		if (factQuery(q)) return true;
+		else if (ruleQuery(q)) return true;
 		return false;
 	}
 
