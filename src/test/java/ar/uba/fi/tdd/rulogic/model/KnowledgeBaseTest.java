@@ -22,35 +22,35 @@ public class KnowledgeBaseTest {
 	public void test_valid_query_varon() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.parseDB("src/main/resources/rules.db");
-		Assert.assertTrue(this.knowledgeBase.answer("varon(juan)."));
+		Assert.assertTrue(kb.answer("varon(juan)."));
 	}
 	
 	@Test
 	public void test_valid_query_mujer() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.parseDB("src/main/resources/rules.db");
-		Assert.assertTrue(this.knowledgeBase.answer("mujer(cecilia)."));
+		Assert.assertTrue(kb.answer("mujer(cecilia)."));
 	}
 	
 	@Test
 	public void test_valid_query_two_params() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.parseDB("src/main/resources/rules.db");
-		Assert.assertTrue(this.knowledgeBase.answer("padre(juan, pepe)."));
+		Assert.assertTrue(kb.answer("padre(juan, pepe)."));
 	}
 	
 	@Test
 	public void test_invalid_query_format() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.parseDB("src/main/resources/rules.db");
-		Assert.assertFalse(this.knowledgeBase.answer("varon (juan) ."));
+		Assert.assertFalse(kb.answer("varon (juan) ."));
 	}
 	
 	@Test
 	public void test_no_match_query_one_param() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.parseDB("src/main/resources/rules.db");
-		Assert.assertFalse(this.knowledgeBase.answer("varon(maria)."));
+		Assert.assertFalse(kb.answer("varon(maria)."));
 	}
 	
 	
@@ -58,7 +58,6 @@ public class KnowledgeBaseTest {
 	public void test_no_match_query_two_params() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.parseDB("src/main/resources/rules.db");
-		Assert.assertFalse(this.knowledgeBase.answer("hermano(alfredo, roberto)."));
+		Assert.assertFalse(kb.answer("hermano(alfredo, roberto)."));
 	}	
-	
 }

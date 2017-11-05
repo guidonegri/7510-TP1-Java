@@ -1,5 +1,6 @@
 package ar.uba.fi.tdd.rulogic.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Fact {
@@ -12,15 +13,14 @@ public class Fact {
     }
 
     public String getName(){ return name; }
-    public String[] getParams() { return params; }
- 
     
-    /*this.compare = function (query) {
-		if (this.name == query.getName()){
-			let params_query = query.getParams();
-			let is_same = (this.params.length == params_query.length) && this.params.every( function(element, index) { return element === params_query[index]; });
-			return is_same;
-		}
-		return false;
-    }*/
+    public String[] getParams() { return params; }
+    
+    public boolean compare(Fact query){
+    	boolean result = false;
+    	if ( name.equals(query.getName()) ){
+    		result = Arrays.equals(params, query.getParams());
+    	}
+    	return result;
+    }
 }

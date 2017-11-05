@@ -13,7 +13,6 @@ public class KnowledgeBase {
 	private List<Fact> db_facts = new ArrayList<Fact>();
 	private List<Rule> db_rules = new ArrayList<Rule>();
   
-	static final String query_pattern = "(.*)\\((.*)\\)";
 	static final String fact_pattern = "(.*)\\((.*)\\)\\.";
 	static final String rule_pattern = "(.*)\\((.*)\\) :- (.*)\\.";
 	
@@ -32,13 +31,15 @@ public class KnowledgeBase {
 			br = new BufferedReader(fr);
 	
 			String line;
-		    while( (line = br.readLine()) != null ) 
+		    while( (line = br.readLine()) != null )
 		    	if (line.matches(rule_pattern)) {
 					Rule rule = parseRule(line);
 					db_rules.add(rule);
 					
 				} else if (line.matches(fact_pattern)) {
 					Fact fact = parseFact(line);
+					System.out.println("FACT name: " + fact.getName());
+					System.out.println("FACT param1: " + fact.getParams()[0]);
 					db_facts.add(fact);	
 				
 				} else {
@@ -49,7 +50,6 @@ public class KnowledgeBase {
 	     e.printStackTrace();
 	     
 	  } finally {
-		  System.out.println(db_facts.get(0));
 		  try{                    
             if( null != fr ){   
                fr.close();     
@@ -63,28 +63,50 @@ public class KnowledgeBase {
 	private Rule parseRule(String line){
 		Pattern p = Pattern.compile(rule_pattern);
 		Matcher m = p.matcher(line);
+		Rule rule = null;
 		
-		String name = m.group(1);
-		String params_str = m.group(2);
-		String[] params = params_str.split(", ");
-		String facts_str = m.group(3).replace("),", ")-");
-		String[] facts = facts_str.split("- ");
-		return new Rule(name, params, facts);
+		if(m.find()){
+			String name = m.group(1);
+			String params_str = m.group(2);
+			String[] params = params_str.split(", ");
+			String facts_str = m.group(3).replace("),", ")-");
+			String[] facts = facts_str.split("- ");
+			rule = new Rule(name, params, facts);
+		}
+		return rule;
 	}
 	
 	private Fact parseFact(String line){
 		Pattern p = Pattern.compile(fact_pattern);
 		Matcher m = p.matcher(line);
+		Fact fact = null;
 		
-		String name = m.group(1);
-		String params_str = m.group(2);
-		String[] params = params_str.split(", ");
-		return new Fact(name, params);
+		if(m.find()){
+			String name = m.group(1);
+			String params_str = m.group(2);
+			String[] params = params_str.split(", ");
+			fact = new Fact(name, params);
+		}
+		return fact;
 	}
 	
+	private boolean validQuery(String query){
+		return query.matches(fact_pattern);
+	}
+	
+	private boolean factQuery(Fact query){
+		for (int i = 0; i < db_facts.size(); i++){
+			Fact fact = db_facts.get(i);
+			if (fact.compare(query)) return true;
+		}
+		return false;
+	}
 	
 	public boolean answer(String query) {
-		return true;
+		if (! validQuery(query)) { System.out.println("Error: wrong query."); return false; }
+		Fact q = parseFact(query);
+		if (factQuery(q)) return true;
+		return false;
 	}
 
 }
