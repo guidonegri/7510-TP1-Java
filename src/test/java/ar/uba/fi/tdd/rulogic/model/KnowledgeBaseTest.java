@@ -15,11 +15,13 @@ public class KnowledgeBaseTest {
 	@Before
 	public void setUp() throws Exception {
 		initMocks(this);
+		
 	}
 
 	@Test
 	public void test() {
-
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/rules.db");
 		Assert.assertTrue(this.knowledgeBase.answer("varon (javier)."));
 
 	}
