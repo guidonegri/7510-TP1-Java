@@ -18,6 +18,7 @@ public class KnowledgeBaseTest {
 		
 	}
 
+	// DATABASE: RULES.DB
 	// QUERY: FACTS
 	@Test
 	public void test_valid_query_varon() {
@@ -83,4 +84,59 @@ public class KnowledgeBaseTest {
 		kb.parseDB("src/main/resources/rules.db");
 		Assert.assertFalse(kb.answer("hijo ( pepe, juan "));
 	}
+	
+	
+	
+	// DATABASE: NUMBER.DB
+	// QUERY: FACTS
+	@Test
+	public void test_valid_query_add() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/numbers.db");
+		Assert.assertTrue(kb.answer("add(one, one, two)."));
+	}
+	
+	@Test
+	public void test_valid_query_add2() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/numbers.db");
+		Assert.assertTrue(kb.answer("add(two, two, four)."));
+	}
+	
+	@Test
+	public void test_no_match_query_add() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/numbers.db");
+		Assert.assertFalse(kb.answer("add(two, one, one)."));
+	}
+	
+	// QUERY: RULES
+	@Test
+	public void test_no_match_query_subtract() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/numbers.db");
+		Assert.assertFalse(kb.answer("subtract(one, one, two)."));
+	}
+	
+	@Test
+	public void test_valid_query_subtract() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/numbers.db");
+		Assert.assertTrue(kb.answer("subtract(two, one, one)."));
+	}
+	
+	@Test
+	public void test_valid_query_subtract2() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/numbers.db");
+		Assert.assertTrue(kb.answer("subtract(one, zero, one)."));
+	}
+	
+	@Test
+	public void test_invalid_rule_query_format_subtract() {
+		KnowledgeBase kb = new KnowledgeBase();
+		kb.parseDB("src/main/resources/numbers.db");
+		Assert.assertFalse(kb.answer("subtract (  one, zero, one)  ."));
+	}
+
 }

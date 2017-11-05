@@ -1,5 +1,0 @@
-varon(pepe).
-varon(hector).
-varon(juan).
-padre(juan, pepe).
-hijo(X, Y) :- varon(X), padre(Y, X).

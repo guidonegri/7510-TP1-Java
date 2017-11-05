@@ -1,0 +1,10 @@
+add(zero, zero, zero).
+add(zero, one, one).
+add(zero, two, two).
+add(one, zero, one).
+add(one, one, two).
+add(one, two, three).
+add(two, zero, two).
+add(two, one, three).
+add(two, two, four).
+subtract(X, Y, Z) :- add(Y, Z, X).
