@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class KnowledgeBase {
 
@@ -64,8 +66,13 @@ public class KnowledgeBase {
 	}
 	
 	private Fact parseFact(String line){
+		Pattern p = Pattern.compile(fact_pattern);
+		Matcher m = p.matcher(line);
 		
-		return new Fact();
+		String name = m.group(1);
+		String params_str = m.group(2);
+		String[] params = params_str.split(",\\s");
+		return new Fact(name, params);
 	}
 	
 	

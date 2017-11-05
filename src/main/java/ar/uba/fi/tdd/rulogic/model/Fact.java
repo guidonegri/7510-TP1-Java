@@ -4,10 +4,15 @@ import java.util.List;
 
 public class Fact {
     private String name;
-    private List<String> params;
+    private String[] params;
+    
+    public Fact(String _name, String[] _params){
+    	name = _name;
+    	params = _params;
+    }
 
     public String getName(){ return name; }
-    public List<String> getParams() { return params; }
+    public String[] getParams() { return params; }
  
     
     /*this.compare = function (query) {
