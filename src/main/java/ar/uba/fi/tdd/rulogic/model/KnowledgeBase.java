@@ -59,7 +59,7 @@ public class KnowledgeBase {
       }
    }
 	
-	private Rule parseRule(String line){
+	public Rule parseRule(String line){
 		Pattern p = Pattern.compile(rule_pattern);
 		Matcher m = p.matcher(line);
 		Rule rule = null;
@@ -75,7 +75,7 @@ public class KnowledgeBase {
 		return rule;
 	}
 	
-	private Fact parseFact(String line){
+	public Fact parseFact(String line){
 		Pattern p = Pattern.compile(fact_pattern);
 		Matcher m = p.matcher(line);
 		Fact fact = null;
@@ -89,7 +89,7 @@ public class KnowledgeBase {
 		return fact;
 	}
 	
-	private boolean validQuery(String query){
+	public boolean validQuery(String query){
 		return query.matches(fact_pattern);
 	}
 	
@@ -120,7 +120,7 @@ public class KnowledgeBase {
 		return false;
 	}
 	
-	private String replaceRuleFactWithQueryParams(String rule_fact, String[] params_db, String[] params_query){
+	public String replaceRuleFactWithQueryParams(String rule_fact, String[] params_db, String[] params_query){
 		for (int i = 0; i < params_db.length; i++){
 			String aux = rule_fact.replace(params_db[i], params_query[i]);
 			rule_fact = aux;
